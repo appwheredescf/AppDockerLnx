@@ -1,0 +1,43 @@
+node {
+    def app
+    stage('Checkout git repo') {
+      git branch: 'master', url: params.git_repo
+    }
+        
+    
+    stage('Build image') {
+        echo "estoy aqui"
+        app = docker.build("jcendejas/appdockerlnx:dev", '"C:/Users/DELL/eclipse-workspace/AppDockerLnx" -f "C:/Users/DELL/eclipse-workspace/AppDockerLnx/AppDockerLnx/Dockerfile" ')
+        echo "termine aqui aqui"
+        /* bat "docker login -u jcendejas -p 136369Ctj"
+        bat "docker run -d -p 8081:8080 appdocker:dev"*/
+        
+    }
+    
+    
+    stage('Push image') {
+    withCredentials([usernamePassword( credentialsId: 'DockerHUB', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
+        def registry_url = "registry.hub.docker.com/"
+        bat "docker login -u $USER -p $PASSWORD ${registry_url}"
+        docker.withRegistry("http://${registry_url}", "DockerHUB") {
+            // Push your image now
+              bat "docker push jcendejas/appdockerlnx:dev"
+            
+     
+        }
+    }
+        
+     stage('run image') {
+        echo "run images"
+         bat "docker login -u jcendejas -p 136369Ctj"
+        bat "docker run -d -p 7101:80 jcendejas/appdockerlnx:dev"
+        
+    }
+}
+    
+
+
+
+
+   
+}
