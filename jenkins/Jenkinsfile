@@ -9,8 +9,6 @@ node {
         echo "estoy aqui"
         app = docker.build("jcendejas/appdockerlnx:dev", '"C:/Users/DELL/eclipse-workspace/AppDockerLnx" -f "C:/Users/DELL/eclipse-workspace/AppDockerLnx/AppDockerLnx/Dockerfile" ')
         echo "termine aqui aqui"
-        /* bat "docker login -u jcendejas -p 136369Ctj"
-        bat "docker run -d -p 8081:8080 appdocker:dev"*/
         
     }
     
@@ -30,7 +28,7 @@ node {
      stage('run image') {
         echo "run images"
          bat "docker login -u jcendejas -p 136369Ctj"
-        bat "docker run -d -p 7101:80 jcendejas/appdockerlnx:dev"
+        bat "docker run -p 6060:80 --name appdockerlnx -d jcendejas/appdockerlnx:dev"
         
     }
 }
