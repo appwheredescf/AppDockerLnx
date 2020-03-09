@@ -1,8 +1,109 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@model MVConsulta
+<div class="clearfix" style="padding-top:2em;">
+    <div class="row"><p class="h2">Lista de Personas</p></div>
+    <div class="row" style="float:right">
+        <button type="button" class="btn btn-default" onclick="modalAddPerson();">Nuevo</button>
+    </div>
+    <div class="row" name="tabla">
+        <table class="table table-responsive">
+            <thead class="h3">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Ap. Paterno</th>
+                    <th>Ap. Materno</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody class="h4">
+                @{
+                    int index = 0;
+                    var data = ViewBag.Message;
+                    foreach (var item in data.personas)
+                    {
+                        var _class = "";
 
-<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
+                        if ((index % 2) != 0)
+                        {
+                            _class = "impar";
+
+
+                        }
+                        if (item.LACTIVO != 0)
+                        {
+                    <tr class"@_class">
+                        <td>
+                            <span> @item.ICVEPERSONA</span>
+                        </td>
+                        <td>
+                            <span> @item.CNOMBRE.Trim()</span>
+                        </td>
+                        <td>
+                            <span> @item.CAPPATERNO.Trim()</span>
+                        </td>
+                        <td>
+                            <span> @item.CAPMATERNO.Trim()</span>
+                        </td>
+                        <td>
+                            <span> <a href="javascript:void(0);" onclick="modalAddPerson('@item.ICVEPERSONA', '@item.CNOMBRE','@item.CAPPATERNO','@item.CAPMATERNO' );">Editar</a> </span>
+                        <td>
+                            <span> <a href="javascript:void(0);">Borrar</a> </span>
+                        </td>
+                    </tr>
+                            }
+                        }
+                    }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<div class="modal" id="modalAddEdit" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalTitle">Agregar persona </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form  method="post" asp-controller="Person" asp-action="AddPreson">
+                <div class="modal-body">
+
+                    <div class="form-group hidden">
+                        <input type="text" class="form-control" id="ICVEOPERACION" name="ICVEOPERACION" aria-describedby="Operacion" placeholder="Operacion">
+                    </div><div class="form-group" id="divID">
+                        <label for="ICVEPERSONA">ID</label>
+                        <input type="text" class="form-control" id="ICVEPERSONA" name="ICVEPERSONA" aria-describedby="ID" placeholder="ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="CNOMBRE">Nombre</label>
+                        <input type="text" class="form-control" id="CNOMBRE" name="CNOMBRE" aria-describedby="Nombre" placeholder="Nombre">
+                    </div>
+                    <div class="form-group">
+                        <label for="CAPPATERNO">Ap. Paterno</label>
+                        <input type="text" class="form-control" id="CAPPATERNO" name="CAPPATERNO" aria-describedby="Ap. Paterno" placeholder="Ap. Paterno">
+                    </div>
+                    <div class="form-group">
+                        <label for="CAPMATERNO">Ap. Materno</label>
+                        <input type="text" class="form-control" id="CAPMATERNO" name="CAPMATERNO" aria-describedby="Ap. Materno" placeholder="Ap. Materno">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@*<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
         <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -91,4 +192,4 @@
             <li><a href="https://go.microsoft.com/fwlink/?LinkID=398609">Publish to Microsoft Azure Web Apps</a></li>
         </ul>
     </div>
-</div>
+</div>*@

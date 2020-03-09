@@ -5,13 +5,29 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AppDockerLnx.Models;
+using AppDockerLnx.Services;
+using Microsoft.Extensions.Configuration;
 
 namespace AppDockerLnx.Controllers
 {
     public class HomeController : Controller
     {
+        public PersonasServices personasServices = new PersonasServices();
+        IConfiguration _iconfiguration;
+
+        public HomeController(IConfiguration iconfiguration)
+        {
+            _iconfiguration = iconfiguration;
+        }
+
         public IActionResult Index()
         {
+            MVConsulta mvConsulta = new MVConsulta();
+            ReqPerson personEmpty = new ReqPerson { ICVEOPERACION = "0", ICVEPERSONA = "", CNOMBRE = "", CAPPATERNO = "", CAPMATERNO = "" };
+            string urlPersonServ = _iconfiguration.GetSection("urlServices").GetSection("urlPersonServ").Value;
+            mvConsulta.personas = personasServices.getPersonas(urlPersonServ, personEmpty);
+            //ViewData["Personas"] = mvConsulta;
+            ViewBag.Message = mvConsulta;
             return View();
         }
 
