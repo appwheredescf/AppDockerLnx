@@ -24,13 +24,29 @@ namespace AppDockerLnx.Controllers
         public IActionResult AddPreson(ReqPerson person)
         {
             MVConsulta mvConsulta = new MVConsulta();
-            ReqPerson personEmpty = new ReqPerson { ICVEOPERACION = person.ICVEOPERACION, ICVEPERSONA = person.ICVEPERSONA, CNOMBRE = person.CNOMBRE, CAPPATERNO = person.CAPPATERNO, CAPMATERNO = person.CAPMATERNO };
+            ReqPerson reqPerson = new ReqPerson { ICVEOPERACION = person.ICVEOPERACION, ICVEPERSONA = person.ICVEPERSONA, CNOMBRE = person.CNOMBRE, CAPPATERNO = person.CAPPATERNO, CAPMATERNO = person.CAPMATERNO };
             string urlPersonServ = _iconfiguration.GetSection("urlServices").GetSection("urlPersonServ").Value;
-            mvConsulta.personas = personasServices.getPersonas(urlPersonServ, personEmpty);
+            mvConsulta.personas = personasServices.getPersonas(urlPersonServ, reqPerson);
+            reqPerson = new ReqPerson { ICVEOPERACION = "0", ICVEPERSONA = "", CNOMBRE = "", CAPPATERNO = "", CAPMATERNO = "" };
+            mvConsulta.personas = personasServices.getPersonas(urlPersonServ, reqPerson);
             //ViewData["Personas"] = mvConsulta;
             ViewBag.Message = mvConsulta;
             return View("~/Views/Home/Index.cshtml");
 
+        }
+
+        [HttpGet]
+        public IActionResult removePerson(string ID)
+        {
+            MVConsulta mvConsulta = new MVConsulta();
+            ReqPerson reqPerson = new ReqPerson { ICVEOPERACION = "3", ICVEPERSONA = ID, CNOMBRE = "", CAPPATERNO = "", CAPMATERNO = "" };
+            string urlPersonServ = _iconfiguration.GetSection("urlServices").GetSection("urlPersonServ").Value;
+            mvConsulta.personas = personasServices.getPersonas(urlPersonServ, reqPerson);
+            reqPerson = new ReqPerson { ICVEOPERACION = "0", ICVEPERSONA = "", CNOMBRE = "", CAPPATERNO = "", CAPMATERNO = "" };
+            mvConsulta.personas = personasServices.getPersonas(urlPersonServ, reqPerson);
+            //ViewData["Personas"] = mvConsulta;
+            ViewBag.Message = mvConsulta;
+            return View("~/Views/Home/Index.cshtml");
         }
     }
 }
