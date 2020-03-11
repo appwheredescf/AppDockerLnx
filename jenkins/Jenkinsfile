@@ -19,7 +19,8 @@ node {
         bat "docker login -u $USER -p $PASSWORD ${registry_url}"
         docker.withRegistry("http://${registry_url}", "DockerHUB") {
             // Push your image now
-              bat "docker push jcendejas/appdockerlnx:dev"
+             // bat "docker push jcendejas/appdockerlnx:dev"
+            app.push();
             
      
         }
