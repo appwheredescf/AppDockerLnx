@@ -7,7 +7,7 @@ node {
     
     stage('Build image') {
         echo "estoy aqui"
-        app = docker.build("jcendejas/appdockerlnx:dev", '"C:/Users/DELL/eclipse-workspace/AppDockerLnx" -f "C:/Users/DELL/eclipse-workspace/AppDockerLnx/AppDockerLnx/Dockerfile" ')
+        app = docker.build("jcendejas/appdockerlnx:dev", '"C:/Program Files (x86)/Jenkins/workspace/AppDockerLnx" -f "C:/Program Files (x86)/Jenkins/workspace/AppDockerLnx/AppDockerLnx/Dockerfile" ')
         echo "termine aqui aqui"
         
     }
