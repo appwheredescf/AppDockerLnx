@@ -26,9 +26,11 @@ node {
     }
         
      stage('run image') {
-        echo "run images"
-         bat "docker login -u jcendejas -p 136369Ctj"
+        bat "docker stop appdockerlnx"
+        bat "docker login -u jcendejas -p 136369Ctj"
         bat "docker run -p 6060:80 --name appdockerlnx -d jcendejas/appdockerlnx:dev"
+        bat "docker network connect pvn_sp_is appdockerlnx "
+         
         
     }
 }
