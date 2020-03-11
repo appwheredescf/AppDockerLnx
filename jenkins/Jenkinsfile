@@ -26,7 +26,7 @@ node {
     }
         
      stage('run image') {
-        bat "docker stop appdockerlnx"
+        bat "docker ps -q --filter "name=appdockerlnx" && docker stop appdockerlnx && docker rm -fv appdockerlnx"
         bat "docker login -u jcendejas -p 136369Ctj"
         bat "docker run -p 6060:80 --name appdockerlnx -d jcendejas/appdockerlnx:dev"
         bat "docker network connect pvn_sp_is appdockerlnx "
