@@ -7,7 +7,7 @@ node {
     
     stage('Build image') {
         echo "estoy aqui"
-        app = docker.build("jcendejas/appdockerlnx:dev", '"C:/Program Files (x86)/Jenkins/workspace/AppDockerLnx" -f "C:/Program Files (x86)/Jenkins/workspace/AppDockerLnx/AppDockerLnx/Dockerfile" ')
+        app = docker.build("jcendejas/appdocker:dev", '"C:/Program Files (x86)/Jenkins/workspace/AppDockerLnx" -f "C:/Program Files (x86)/Jenkins/workspace/AppDockerLnx/AppDockerLnx/Dockerfile" ')
         echo "termine aqui aqui"
         
     }
@@ -27,10 +27,10 @@ node {
     }
         
      stage('run image') {
-        bat "docker ps -q --filter name=appdockerlnx && docker stop appdockerlnx && docker rm -fv appdockerlnx"
+        bat "docker ps -q --filter name=appdocker && docker stop appdocker && docker rm -fv appdocker"
         bat "docker login -u jcendejas -p 136369Ctj"
-        bat "docker run -p 6060:80 --name appdockerlnx -d jcendejas/appdockerlnx:dev"
-        bat "docker network connect pvn_sp_is appdockerlnx "
+        bat "docker run -p 6060:80 --name appdocker -d jcendejas/appdocker:dev"
+        bat "docker network connect pvn_sp_is appdocker "
          
         
     }
